@@ -81,9 +81,6 @@ app.use(require("./server/user.js"));
 // Require in the routes from images.js
 app.use(require("./server/images.js"));
 
-
-
-
 // Start the server listening at PORT
 app.listen(PORT, () => {
     console.log(`server is listening on ${PORT}`);

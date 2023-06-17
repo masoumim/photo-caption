@@ -30,11 +30,14 @@ router.get("/image/:id", async (req, res) => {
     }
 });
 
-// GET all images (/images)
+// GET all images and captions for each image (/images)
 router.get("/images", async (req, res) => {
     // Get all of the img paths stored in DB
     const images = await requests.getAllImgs();
-    // Render page with array of img paths
+    
+    // Get all of the captions stored in DB
+    
+    // Render page with array of img paths and array of captions
     res.render("images", { images: images });
 });
 

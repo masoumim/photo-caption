@@ -129,11 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Doc / Docx files
-.doc
-.docx
-
-# SQL files
+# My SQL and DOC files
 .sql
 Sequelize Instructions.docx
 sql-queries.sql

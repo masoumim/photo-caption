@@ -11,6 +11,9 @@ const { User } = require('../db/models/user.js');
 // Get the Img model
 const { Img } = require('../db/models/img.js');
 
+// Get the Caption model
+const { Caption } = require('../db/models/caption.js');
+
 // Create new sequelize connection to the db
 const sequelize = new Sequelize(process.env.DATABASE_URL,
     {
@@ -23,8 +26,8 @@ const sequelize = new Sequelize(process.env.DATABASE_URL,
 // ADD USER TO DB
 const addUser = async (name_, password_, email_) => {
     // Create an instance of User
-    const addQuery = await User.create({ name: name_, password: password_, email: email_ });
-    return addQuery;
+    const insertQuery = await User.create({ name: name_, password: password_, email: email_ });
+    return insertQuery;
 }
 
 // GET USER BY NAME
@@ -41,7 +44,7 @@ const getUserById = async (id_) => {
 
 // ADD IMG File Name to DB
 const addImg = async (img_path_) => {
-    const addQuery = await Img.create({ img_path: img_path_ });
+    const insertQuery = await Img.create({ img_path: img_path_ });
 }
 
 // GET ALL IMGS
@@ -68,6 +71,31 @@ const getImg = async (id_) => {
         return fileName;
     } catch (err) {
         throw "Sorry, that image doesn't exist";
+    }
+}
+
+// ADD A CAPTION
+const addCaption = async (caption, userId, imgId) => {
+    try {
+        const insertQuery = await Caption.create({ caption_text: caption, user_id: userId, img_id: imgId });
+        return insertQuery;
+    } catch (err) {
+        return err;
+    }
+}
+
+// addCaption("I love this cat!", 3, 4);
+// addCaption("Best cat ever!", 3, 2);
+// addCaption("Very cute!", 4, 4);
+// addCaption("Being a cat must be nice :)", 4, 3);
+
+// GET ALL CAPTIONS
+const getAllCaptions = async () => {
+    try {
+        // const getQuery = await 
+
+    } catch (err) {
+        return err;
     }
 }
 
