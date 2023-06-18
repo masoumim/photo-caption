@@ -1,7 +1,14 @@
 <h2>Image</h2>
 
 <img src=<%=image%> width="700" height="600">
-
-
-
-
+<br>
+<% captions.forEach(function(caption){ %>
+    <% users.forEach(function(user){ %>
+        <%if (caption.user_id === user.id) { %>
+            <br>
+            <b><%=user.name%> - <%=user.email%></b>:
+            <%=caption.caption_text%>
+            <br> 
+        <% } %>
+    <% }); %>
+<% }); %>

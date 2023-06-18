@@ -64,6 +64,25 @@ const getUserById = async (id_) => {
     return getQuery;
 }
 
+// GET USER(S) FOR EACH CAPTION ID
+const getUsersByCaptionID = async (captions) => {
+    try {
+        let users = [];
+        for (const caption in captions) {
+            const getQuery = await getUserById(captions[caption].user_id);
+            // Create obj that contains user name and email
+            const obj = {};
+            obj.id = getQuery[0].dataValues.id;
+            obj.name = getQuery[0].dataValues.name;
+            obj.email = getQuery[0].dataValues.email;
+            users.push(obj);
+        }
+        return users;
+    } catch (err) {
+        return err;
+    }
+}
+
 // ADD IMG File Name to DB
 const addImg = async (img_path_) => {
     const insertQuery = await Img.create({ img_path: img_path_ });
@@ -133,4 +152,37 @@ const getAllCaptions = async () => {
     }
 }
 
-module.exports = { addUser, getAllUsers, getUserByName, getUserById, getAllImgs, getImg, getAllCaptions }
+// GET ALL CAPTIONS BY IMAGE ID
+const getCaptionsByImgID = async (imgID) => {
+    try {
+        const getQuery = await Caption.findAll({ where: { img_id: imgID } });
+
+        // Extract all of the captions from the query result
+        let captions = [];
+        for (const element in getQuery) {
+            // Create obj that contains caption_text, user_id and img_id
+            const obj = {};
+            obj.caption_text = getQuery[element].dataValues.caption_text;
+            obj.user_id = getQuery[element].dataValues.user_id;
+            obj.img_id = getQuery[element].dataValues.img_id;
+            captions.push(obj);
+        }
+        return captions;
+
+    } catch (err) {
+        return err;
+    }
+}
+
+
+module.exports = {
+    addUser,
+    getAllUsers,
+    getUserByName,
+    getUserById,
+    getUsersByCaptionID,
+    getAllImgs,
+    getImg,
+    getAllCaptions,
+    getCaptionsByImgID
+}

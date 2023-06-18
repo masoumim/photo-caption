@@ -13,7 +13,6 @@ const router = express.Router();
 
 // *** ROUTES ***
 
-
 // GET image (/image/:imageId)
 router.get("/image/:id", async (req, res) => {
     try {
@@ -23,8 +22,14 @@ router.get("/image/:id", async (req, res) => {
         // Append the public folder to the image file name
         const imgpath = path.join("/public/", image);
 
-        // Render page with retrieved image filename
-        res.render("image", { image: imgpath });
+        // Get all of the captions for this image
+        const captions = await requests.getCaptionsByImgID(req.params.id);
+
+        // Get all of the users for each caption
+        const users = await requests.getUsersByCaptionID(captions);
+
+        // Render page with retrieved image filename and user's captions
+        res.render("image", { image: imgpath, captions: captions, users: users });
     } catch (err) {
         res.status(500).send(err);
     }
