@@ -77,7 +77,7 @@ const getImg = async (id_) => {
 // ADD A CAPTION
 const addCaption = async (caption, userId, imgId) => {
     try {
-        const insertQuery = await Caption.create({ caption_text: caption, user_id: userId, img_id: imgId });        
+        const insertQuery = await Caption.create({ caption_text: caption, user_id: userId, img_id: imgId });
         return insertQuery;
     } catch (err) {
         return err;
@@ -93,14 +93,22 @@ const addCaption = async (caption, userId, imgId) => {
 const getAllCaptions = async () => {
     try {
         const getQuery = await Caption.findAll();
-        console.log(getQuery);
-        return getQuery;
+
+        // Extract all of the captions from the query result
+        let captions = [];
+        for (const element in getQuery) {
+            // Create obj that contains caption_text, user_id and img_id
+            const obj = {};
+            obj.caption_text = getQuery[element].dataValues.caption_text;
+            obj.user_id = getQuery[element].dataValues.user_id;
+            obj.img_id = getQuery[element].dataValues.img_id;
+            captions.push(obj);
+        }
+        return captions;
 
     } catch (err) {
         return err;
     }
 }
 
-// getAllCaptions();
-
-module.exports = { addUser, getUserByName, getUserById, getAllImgs, getImg }
+module.exports = { addUser, getUserByName, getUserById, getAllImgs, getImg, getAllCaptions }
