@@ -1,12 +1,24 @@
 <h2>All Images</h2>
 
 <ul>
-    <% images.forEach(function(img){ %>        
+    <% images.forEach(function(img){ %>
+        <br>
         <a href="image/<%=img.id%>">
         <img src=../public/<%=img.filename%> width="700" height="600">
         </a>
         <br>
-        "Funny comment..."
-        <br>
+        <% captions.forEach(function(caption){ %>
+            <%if (img.id === caption.img_id) { %>
+                <% users.forEach(function(user){ %>
+                    <%if (caption.user_id === user.id) { %> 
+                        <br>
+                        <b><%=user.name%> - <%=user.email%></b>:
+                        <%=caption.caption_text%>
+                        <br>
+                    <% } %>
+                <% }); %>      
+            <% } %>
+        <% }); %>
     <% }); %>
 </ul>
+

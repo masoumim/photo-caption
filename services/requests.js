@@ -23,6 +23,28 @@ const sequelize = new Sequelize(process.env.DATABASE_URL,
         }
     });
 
+
+// GET ALL USERS
+const getAllUsers = async () => {
+    try {
+        const getQuery = await User.findAll();
+
+        // Extract all of the id, name and email from the query result
+        let users = [];
+        for (const element in getQuery) {
+            // Create obj that contains user id, name and email
+            const obj = {};
+            obj.id = getQuery[element].dataValues.id;
+            obj.name = getQuery[element].dataValues.name;
+            obj.email = getQuery[element].dataValues.email;
+            users.push(obj);
+        }
+        return users;
+    } catch (err) {
+        return err;
+    }
+}
+
 // ADD USER TO DB
 const addUser = async (name_, password_, email_) => {
     // Create an instance of User
@@ -111,4 +133,4 @@ const getAllCaptions = async () => {
     }
 }
 
-module.exports = { addUser, getUserByName, getUserById, getAllImgs, getImg, getAllCaptions }
+module.exports = { addUser, getAllUsers, getUserByName, getUserById, getAllImgs, getImg, getAllCaptions }

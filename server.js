@@ -74,7 +74,6 @@ app.use(passport.session());
 // Static middleware for serving static files (images)
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
-
 // Require in the routes from user.js
 app.use(require("./server/user.js"));
 

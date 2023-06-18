@@ -39,8 +39,11 @@ router.get("/images", async (req, res) => {
         // Get all of the captions stored in DB
         const captions = await requests.getAllCaptions();
 
-        // Render page with array of img paths and array of captions
-        res.render("images", { images: images, captions: captions });
+        // Get all of the users stored in the DB
+        const users = await requests.getAllUsers();
+               
+        // Render page with array of img paths, captions and users
+        res.render("images", { images: images, captions: captions, users: users});
     } catch (err) {
         res.status(500).send(err);
     }
