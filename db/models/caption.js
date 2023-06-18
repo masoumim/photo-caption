@@ -44,7 +44,9 @@ class Caption extends Model { }
 
 Caption.init({
   // Model attributes are defined here
-  caption_text: { type: DataTypes.STRING, allowNull: false }
+  caption_text: { type: DataTypes.STRING, allowNull: false },
+  user_id: {type: DataTypes.INTEGER, allowNull: false},
+  img_id: {type: DataTypes.INTEGER, allowNull: false}
 }, {
   // Other model options go here
   sequelize, // We need to pass the connection instance

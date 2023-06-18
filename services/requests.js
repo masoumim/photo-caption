@@ -77,7 +77,7 @@ const getImg = async (id_) => {
 // ADD A CAPTION
 const addCaption = async (caption, userId, imgId) => {
     try {
-        const insertQuery = await Caption.create({ caption_text: caption, user_id: userId, img_id: imgId });
+        const insertQuery = await Caption.create({ caption_text: caption, user_id: userId, img_id: imgId });        
         return insertQuery;
     } catch (err) {
         return err;
@@ -92,11 +92,15 @@ const addCaption = async (caption, userId, imgId) => {
 // GET ALL CAPTIONS
 const getAllCaptions = async () => {
     try {
-        // const getQuery = await 
+        const getQuery = await Caption.findAll();
+        console.log(getQuery);
+        return getQuery;
 
     } catch (err) {
         return err;
     }
 }
+
+// getAllCaptions();
 
 module.exports = { addUser, getUserByName, getUserById, getAllImgs, getImg }
