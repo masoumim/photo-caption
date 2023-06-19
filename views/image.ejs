@@ -1,6 +1,24 @@
-<h2>Image</h2>
-
-<img src=<%=image%> width="700" height="600">
+<%- include('../layout/header'); -%>
+<br>
+<br>
+<h4><%=image.title%></h4>
+<%=image.author%>, <i><%=image.date%></i>
+<br>
+<br>
+<%=image.description%>
+<br>
+<br>
+<img src=<%=imgpath%> width="700" height="600">
+<br>
+<br>
+<!-- SUBMIT CAPTION / COMMENT FORM -->
+<form action="/image/<%=id%>" method="post">    
+    <input type="text" name="comment">
+    <button type="submit">Submit Comment</button>
+</form>
+<br>
+<br>
+Comments:
 <br>
 <% captions.forEach(function(caption){ %>
     <% users.forEach(function(user){ %>
@@ -12,10 +30,3 @@
         <% } %>
     <% }); %>
 <% }); %>
-
-<!-- SUBMIT CAPTION / COMMENT FORM -->
-<form action="/image/<%=id%>" method="post">
-    <label>Comment / Caption</label>
-    <input type="text" name="comment">
-    <button type="submit">Submit</button>
-</form>

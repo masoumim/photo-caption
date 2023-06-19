@@ -96,8 +96,8 @@ const getUsersByCaptionID = async (captions) => {
 }
 
 // ADD IMG File Name to DB
-const addImg = async (img_path_) => {
-    const insertQuery = await Img.create({ img_path: img_path_ });
+const addImg = async (path, title, date, author, description) => {
+    const insertQuery = await Img.create({ img_path: path, img_title: title, img_date: date, img_author: author, img_description: description });
 }
 
 // GET ALL IMGS
@@ -111,6 +111,10 @@ const getAllImgs = async () => {
         const obj = {};
         obj.id = getQuery[element].dataValues.id;
         obj.filename = getQuery[element].dataValues.img_path;
+        obj.title = getQuery[element].dataValues.img_title;
+        obj.author = getQuery[element].dataValues.img_author;
+        obj.date = getQuery[element].dataValues.img_date;
+        obj.description = getQuery[element].dataValues.img_description;
         fileNames.push(obj);
     }
     return fileNames;
@@ -120,8 +124,15 @@ const getAllImgs = async () => {
 const getImg = async (id_) => {
     try {
         const getQuery = await Img.findAll({ where: { id: id_ } });
-        const fileName = getQuery[0].dataValues.img_path;
-        return fileName;
+        // Create obj that contains image path (file name) and the image's ID
+        const obj = {};
+        obj.id = getQuery[0].dataValues.id;
+        obj.filename = getQuery[0].dataValues.img_path;
+        obj.title = getQuery[0].dataValues.img_title;
+        obj.author = getQuery[0].dataValues.img_author;
+        obj.date = getQuery[0].dataValues.img_date;
+        obj.description = getQuery[0].dataValues.img_description;        
+        return obj;
     } catch (err) {
         throw "Sorry, that image doesn't exist";
     }

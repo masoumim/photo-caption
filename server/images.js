@@ -23,16 +23,16 @@ router.get("/image/:id", async (req, res) => {
         const image = await requests.getImg(req.params.id);
 
         // Append the public folder to the image file name
-        const imgpath = path.join("/public/", image);
+        const imgpath = path.join("/public/", image.filename);
 
         // Get all of the captions for this image
         const captions = await requests.getCaptionsByImgID(req.params.id);
 
         // Get all of the users for each caption
         const users = await requests.getUsersByCaptionID(captions);
-      
+
         // Render page with retrieved image filename and user's captions
-        res.render("image", { image: imgpath, captions: captions, users: users, id: req.params.id });
+        res.render("image", { image: image, imgpath: imgpath, captions: captions, users: users, id: req.params.id });
     } catch (err) {
         res.status(500).send(err);
     }
@@ -57,8 +57,6 @@ router.get("/images", async (req, res) => {
     }
 });
 
-
-
 // POST caption (/image/:imageId)
 /*
 Pass in passport.authenticate() as middleware. 
@@ -80,7 +78,7 @@ router.post("/image/:id", async (req, res) => {
             res.status(201).redirect(req.originalUrl);
         }
         else {
-            redirect("/login");
+            res.redirect("/");
         }
 
     } catch (err) {

@@ -39,7 +39,11 @@ class Img extends Model { }
 
 Img.init({
   // Model attributes are defined here
-  img_path: { type: DataTypes.STRING, allowNull: false }
+  img_path: { type: DataTypes.STRING, allowNull: false },
+  img_title: { type: DataTypes.STRING, allowNull: false },
+  img_description: { type: DataTypes.STRING, allowNull: false },
+  img_date: { type: DataTypes.STRING, allowNull: false },
+  img_author: { type: DataTypes.STRING, allowNull: false }
 }, {
   // Other model options go here
   sequelize, // We need to pass the connection instance

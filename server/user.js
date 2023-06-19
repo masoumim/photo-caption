@@ -13,24 +13,25 @@ const router = express.Router();
 // *** ROUTES ***
 
 // GET HOME
-// Redirect to login
 router.get("/", (req, res) => {
-    res.redirect("/login");
-});
-
-// GET the login page
-router.get("/login", (req, res) => {
-    res.render("login");
+    // If user is logged in - render their profile
+    if(req.user){
+        res.render("profile", { user: req.user });
+    }
+    else{
+        // Otherwise, render home / index
+        res.render("index");
+    } 
 });
 
 // GET PROFILE
-router.get("/profile", (req, res) => {
-    if (req.user) {
-        // Render the profile ejs page
-        // Pass the user object stored in session to the page                  
+router.get("/profile", (req, res) => {    
+    if (req.user) {        
+        // If user is logged in, render pro                
         res.render("profile", { user: req.user });
     } else {
-        res.redirect("/login");
+        // If user isn't logged in, render the index page
+        res.redirect("/");
     }
 });
 
@@ -44,7 +45,7 @@ router.get("/register", (req, res) => {
 router.get('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
-        res.redirect('/login');
+        res.redirect('/');
     });
 });
 
@@ -71,7 +72,7 @@ router.post("/register", async (req, res) => {
             // Add if/else statement with the new user as the condition:
             if (resultUser) {
                 // Send correct response if new user is created:
-                res.status(201).send(`User registered: ${resultUser.dataValues.name}`);
+                res.status(201).redirect("/");
             } else {
                 // Send correct response if new user failed to be created:
                 res.status(500).json({ msg: "Error: not able to register user" });
@@ -93,7 +94,7 @@ process behind the scenes and creates a user session for us.
 If successful, the user will be Serialized
 */
 // POST LOGIN
-router.post("/login", passport.authenticate("local", { failureRedirect: "/login" }), (req, res) => {
+router.post("/", passport.authenticate("local", { failureRedirect: "/" }), (req, res) => {
     res.redirect("profile");
 });
 
