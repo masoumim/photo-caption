@@ -12,3 +12,10 @@
         <% } %>
     <% }); %>
 <% }); %>
+
+<!-- SUBMIT CAPTION / COMMENT FORM -->
+<form action="/image/<%=id%>" method="post">
+    <label>Comment / Caption</label>
+    <input type="text" name="comment">
+    <button type="submit">Submit</button>
+</form>

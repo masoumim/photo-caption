@@ -1,6 +1,9 @@
 // Import modules and libraries
 const express = require("express");
 
+// Import the passport module
+const passport = require("passport");
+
 // Import the requests module
 const requests = require("../services/requests");
 
@@ -29,7 +32,7 @@ router.get("/image/:id", async (req, res) => {
         const users = await requests.getUsersByCaptionID(captions);
 
         // Render page with retrieved image filename and user's captions
-        res.render("image", { image: imgpath, captions: captions, users: users });
+        res.render("image", { image: imgpath, captions: captions, users: users, id: req.params.id });
     } catch (err) {
         res.status(500).send(err);
     }
@@ -46,9 +49,9 @@ router.get("/images", async (req, res) => {
 
         // Get all of the users stored in the DB
         const users = await requests.getAllUsers();
-               
+
         // Render page with array of img paths, captions and users
-        res.render("images", { images: images, captions: captions, users: users});
+        res.render("images", { images: images, captions: captions, users: users });
     } catch (err) {
         res.status(500).send(err);
     }
@@ -56,8 +59,29 @@ router.get("/images", async (req, res) => {
 
 
 
-//TODO: POST caption (/images/:imageId)
-// check if user is logged in or not by using middleware
+// POST caption (/image/:imageId)
+/*
+Pass in passport.authenticate() as middleware. 
+Using this middleware allows Passport.js to take care of the authentication 
+process behind the scenes and creates a user session for us.
+If successful, the user will be Serialized
+*/
+router.post("/image/:id", async (req, res) => {
+    try {
+        if (req.user) {
+            // Get the submitted comment
+            const submittedComment = req.body;
+            // Reload the page to show the new comment
+            res.redirect(req.originalUrl)
+        }
+        else {
+            redirect("/login");
+        }
+
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 
 
 // Export the user router
