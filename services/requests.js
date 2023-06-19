@@ -69,13 +69,25 @@ const getUsersByCaptionID = async (captions) => {
     try {
         let users = [];
         for (const caption in captions) {
+            // Get the user by their id
             const getQuery = await getUserById(captions[caption].user_id);
-            // Create obj that contains user name and email
-            const obj = {};
-            obj.id = getQuery[0].dataValues.id;
-            obj.name = getQuery[0].dataValues.name;
-            obj.email = getQuery[0].dataValues.email;
-            users.push(obj);
+
+            // We only want to add a user once, even if one user has multiple comments,
+            // So we check if the user is in the array already
+            const isFound = users.some(element => {
+                return element.id === getQuery[0].dataValues.id;
+            });
+
+            // If user not found, add them to array
+            if (!isFound) {
+                console.log("user not found, adding user to array");
+                // Create obj that contains user name and email
+                const obj = {};
+                obj.id = getQuery[0].dataValues.id;
+                obj.name = getQuery[0].dataValues.name;
+                obj.email = getQuery[0].dataValues.email;
+                users.push(obj);
+            }
         }
         return users;
     } catch (err) {
@@ -124,11 +136,6 @@ const addCaption = async (caption, userId, imgId) => {
         return err;
     }
 }
-
-// addCaption("I love this cat!", 3, 4);
-// addCaption("Best cat ever!", 3, 2);
-// addCaption("Very cute!", 4, 4);
-// addCaption("Being a cat must be nice :)", 4, 3);
 
 // GET ALL CAPTIONS
 const getAllCaptions = async () => {
@@ -183,6 +190,7 @@ module.exports = {
     getUsersByCaptionID,
     getAllImgs,
     getImg,
+    addCaption,
     getAllCaptions,
     getCaptionsByImgID
 }

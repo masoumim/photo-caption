@@ -30,7 +30,7 @@ router.get("/image/:id", async (req, res) => {
 
         // Get all of the users for each caption
         const users = await requests.getUsersByCaptionID(captions);
-
+      
         // Render page with retrieved image filename and user's captions
         res.render("image", { image: imgpath, captions: captions, users: users, id: req.params.id });
     } catch (err) {
@@ -68,11 +68,16 @@ If successful, the user will be Serialized
 */
 router.post("/image/:id", async (req, res) => {
     try {
+        // Check if there is an active, authenticated User currently logged in
         if (req.user) {
             // Get the submitted comment
-            const submittedComment = req.body;
+            const submittedComment = req.body.comment;
+
+            // Add the caption to the db
+            await requests.addCaption(submittedComment, req.user.id, parseInt(req.params.id));
+
             // Reload the page to show the new comment
-            res.redirect(req.originalUrl)
+            res.status(201).redirect(req.originalUrl);
         }
         else {
             redirect("/login");
@@ -82,7 +87,6 @@ router.post("/image/:id", async (req, res) => {
         res.status(500).send(err);
     }
 });
-
 
 // Export the user router
 module.exports = router;
