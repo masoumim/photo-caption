@@ -10,11 +10,14 @@ const requests = require("../services/requests");
 // Require in the path module
 const path = require('path');
 
+// Require in the node-cache module used for caching
+const nodecache = require('node-cache');
+
+// Create instance of node-cache, stdTTL = number of seconds until cache is deleted. 0 = unlimited
+const myCache = new nodecache({stdTTL: 0});
+
 // Create the user router
 const router = express.Router();
-
-
-// *** ROUTES ***
 
 // GET image (/image/:imageId)
 router.get("/image/:id", async (req, res) => {
@@ -40,22 +43,42 @@ router.get("/image/:id", async (req, res) => {
 
 // GET all images and captions for each image (/images)
 router.get("/images", async (req, res) => {
+    const key = "getAllImagesCache"; // Key used for node-cache's key/value pair
     try {
-        // Get all of the img paths stored in DB
-        const images = await requests.getAllImgs();
+        if (myCache.has(key)) {            
+            // CACHE HIT
+            // Get the cache data using the key
+            const allImagesCache = myCache.get(key);
 
-        // Get all of the captions stored in DB
-        const captions = await requests.getAllCaptions();
+            // Render page with cached data
+            res.status(200).render("images", { images: allImagesCache.images, captions: allImagesCache.captions, users: allImagesCache.users });
+        }
+        else {
+            // CACHE MISS
+            // Get all of the img paths stored in DB
+            const images = await requests.getAllImgs();
 
-        // Get all of the users stored in the DB
-        const users = await requests.getAllUsers();
+            // Get all of the captions stored in DB
+            const captions = await requests.getAllCaptions();
 
-        // Render page with array of img paths, captions and users
-        res.render("images", { images: images, captions: captions, users: users });
-    } catch (err) {
+            // Get all of the users stored in the DB
+            const users = await requests.getAllUsers();
+
+            // Store all data in single object to be saved to cache
+            const data = { images, captions, users };
+
+            // Save cache
+            myCache.set(key, data);
+
+            // Render page with array of img paths, captions and users
+            res.status(200).render("images", { images: images, captions: captions, users: users });
+        }
+    }
+    catch (err) {
         res.status(500).send(err);
     }
 });
+
 
 // POST caption (/image/:imageId)
 /*
@@ -80,7 +103,6 @@ router.post("/image/:id", async (req, res) => {
         else {
             res.redirect("/");
         }
-
     } catch (err) {
         res.status(500).send(err);
     }

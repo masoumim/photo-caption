@@ -6,17 +6,20 @@ const bcrypt = require("bcrypt");
 // Import the requests module
 const requests = require("../services/requests");
 
+// Require in the node-cache module used for caching
+const nodecache = require('node-cache');
+
+// Create instance of node-cache 
+// stdTTL = number of seconds until cache is deleted. Set to 1hr.
+const userDataCache = new nodecache({ stdTTL: 3600 });
+
 // Create the user router
 const router = express.Router();
-
-
-// *** ROUTES ***
 
 // GET HOME
 router.get("/", (req, res) => {
     // If user is logged in - render their profile
-    if (req.user) {
-        // res.render("profile", { user: req.user });
+    if (req.user) {        
         res.redirect("/profile");
     }
     else {
@@ -28,30 +31,49 @@ router.get("/", (req, res) => {
 // GET PROFILE
 router.get("/profile", async (req, res) => {
     if (req.user) {
-        // If user is logged in, render profile including pictures and comments made by user
-        let imagesWithUserComment = []; // Array to store images with comments made by user
+        try {
+            const key = "getUserData:" + req.user.id; // Key used for node-cache's key/value pair            
+            if (userDataCache.has(key)) {                
+                // CACHE HIT - Load data from cache
+                const userDataFromCache = userDataCache.get(key);
 
-        // Get User captions:
-        const userCaptions = await requests.getCaptionsByUserID(req.user.id);
+                // Render user profile with cached data
+                res.render("profile", { user: req.user, images: userDataFromCache.imagesWithUserComment, captions: userDataFromCache.userCaptions });
+            } else {                
+                // CACHE MISS - Load data from DB
+                // If user is logged in, render profile including pictures and comments made by user
+                let imagesWithUserComment = []; // Array to store images with comments made by user
 
-        // Get corresponding images:
-        if (userCaptions.length > 0) {
-            for (element in userCaptions) {
-                const image = await requests.getImg(userCaptions[element].img_id);
+                // Get User captions:
+                const userCaptions = await requests.getCaptionsByUserID(req.user.id);
 
-                // We only want to add an image once, even if one user has multiple comments on one image
-                // Check if the image is in the array already
-                const isFound = imagesWithUserComment.some(element => {
-                    return element.id === image.id;
-                });
+                // Get corresponding images:
+                if (userCaptions.length > 0) {
+                    for (element in userCaptions) {
+                        const image = await requests.getImg(userCaptions[element].img_id);
 
-                // If image not found, add it to array
-                if (!isFound) {
-                    imagesWithUserComment.push(image);
+                        // We only want to add an image once, even if one user has multiple comments on one image
+                        // Check if the image is in the array already
+                        const isFound = imagesWithUserComment.some(element => {
+                            return element.id === image.id;
+                        });
+
+                        // If image not found, add it to array
+                        if (!isFound) {
+                            imagesWithUserComment.push(image);
+                        }
+                    }
                 }
+                // Save cache
+                const data = { imagesWithUserComment, userCaptions };
+                userDataCache.set(key, data);
+
+                // Render the profile page with user data from DB
+                res.render("profile", { user: req.user, images: imagesWithUserComment, captions: userCaptions });
             }
+        } catch (err) {
+            res.status(500).send(err);
         }
-        res.render("profile", { user: req.user, images: imagesWithUserComment, captions: userCaptions });
     } else {
         // If user isn't logged in, render the index page
         res.redirect("/");
