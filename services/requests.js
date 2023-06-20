@@ -59,7 +59,7 @@ const getUserByName = async (name_) => {
 }
 
 // GET USER BY ID
-const getUserById = async (id_) => {
+const getUserByID = async (id_) => {
     const getQuery = await User.findAll({ where: { id: id_ } });
     return getQuery;
 }
@@ -70,7 +70,7 @@ const getUsersByCaptionID = async (captions) => {
         let users = [];
         for (const caption in captions) {
             // Get the user by their id
-            const getQuery = await getUserById(captions[caption].user_id);
+            const getQuery = await getUserByID(captions[caption].user_id);
 
             // We only want to add a user once, even if one user has multiple comments,
             // So we check if the user is in the array already
@@ -80,7 +80,6 @@ const getUsersByCaptionID = async (captions) => {
 
             // If user not found, add them to array
             if (!isFound) {
-                console.log("user not found, adding user to array");
                 // Create obj that contains user name and email
                 const obj = {};
                 obj.id = getQuery[0].dataValues.id;
@@ -131,7 +130,7 @@ const getImg = async (id_) => {
         obj.title = getQuery[0].dataValues.img_title;
         obj.author = getQuery[0].dataValues.img_author;
         obj.date = getQuery[0].dataValues.img_date;
-        obj.description = getQuery[0].dataValues.img_description;        
+        obj.description = getQuery[0].dataValues.img_description;
         return obj;
     } catch (err) {
         throw "Sorry, that image doesn't exist";
@@ -192,16 +191,40 @@ const getCaptionsByImgID = async (imgID) => {
     }
 }
 
+// GET ALL CAPTIONS BY USER ID
+const getCaptionsByUserID = async (userID) => {
+    try {
+        const getQuery = await Caption.findAll({ where: { user_id: userID } });
+
+        // Extract all of the captions from the query result
+        let captions = [];
+        for (const element in getQuery) {
+            // Create obj that contains caption_text, user_id and img_id
+            const obj = {};
+            obj.caption_text = getQuery[element].dataValues.caption_text;
+            obj.user_id = getQuery[element].dataValues.user_id;
+            obj.img_id = getQuery[element].dataValues.img_id;
+            captions.push(obj);
+        }
+        return captions;
+
+
+    } catch (err) {
+
+    }
+}
+
 
 module.exports = {
     addUser,
     getAllUsers,
     getUserByName,
-    getUserById,
+    getUserByID,
     getUsersByCaptionID,
     getAllImgs,
     getImg,
     addCaption,
     getAllCaptions,
-    getCaptionsByImgID
+    getCaptionsByImgID,
+    getCaptionsByUserID
 }

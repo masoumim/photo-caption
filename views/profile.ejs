@@ -3,10 +3,38 @@
 <br>
 Welcome back, <%=user.name%>
     <br>
+    <a href="/logout">
+        <button>Log out</button>
+    </a>
+    <br>
     <%=user.email%>
         <br>
-        
+        <h3>Your captions and comments:</h3>
+        <% images.forEach(function(img){ %>
             <br>
-            <a href="/logout">
-                <button>Log out</button>
+            <h4><%=img.title%></h4>
+            <%=img.author%>, <i><%=img.date%></i>
+            <br>
+            <br>
+            <%=img.description%>
+            <br>
+            <br>
+            <a href="/image/<%=img.id%>">
+            <img src=../public/<%=img.filename%> width="700" height="600">
             </a>
+            <br>
+            <br>
+            <br>            
+            <% captions.forEach(function(caption){ %>
+                <%if (img.id === caption.img_id) { %>
+                    <br>
+                    <b><%=user.name%> - <%=user.email%></b>:
+                    <%=caption.caption_text%>
+                    <br>                    
+                <% } %>
+            <% }); %>
+        <br>
+        <br>
+        <br>
+        <% }); %>
+        <br>

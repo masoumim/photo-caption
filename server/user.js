@@ -15,20 +15,43 @@ const router = express.Router();
 // GET HOME
 router.get("/", (req, res) => {
     // If user is logged in - render their profile
-    if(req.user){
-        res.render("profile", { user: req.user });
+    if (req.user) {
+        // res.render("profile", { user: req.user });
+        res.redirect("/profile");
     }
-    else{
+    else {
         // Otherwise, render home / index
         res.render("index");
-    } 
+    }
 });
 
 // GET PROFILE
-router.get("/profile", (req, res) => {    
-    if (req.user) {        
-        // If user is logged in, render pro                
-        res.render("profile", { user: req.user });
+router.get("/profile", async (req, res) => {
+    if (req.user) {
+        // If user is logged in, render profile including pictures and comments made by user
+        let imagesWithUserComment = []; // Array to store images with comments made by user
+
+        // Get User captions:
+        const userCaptions = await requests.getCaptionsByUserID(req.user.id);
+
+        // Get corresponding images:
+        if (userCaptions.length > 0) {
+            for (element in userCaptions) {
+                const image = await requests.getImg(userCaptions[element].img_id);
+
+                // We only want to add an image once, even if one user has multiple comments on one image
+                // Check if the image is in the array already
+                const isFound = imagesWithUserComment.some(element => {
+                    return element.id === image.id;
+                });
+
+                // If image not found, add it to array
+                if (!isFound) {
+                    imagesWithUserComment.push(image);
+                }
+            }
+        }
+        res.render("profile", { user: req.user, images: imagesWithUserComment, captions: userCaptions });
     } else {
         // If user isn't logged in, render the index page
         res.redirect("/");
@@ -51,7 +74,7 @@ router.get('/logout', function (req, res, next) {
 
 // POST REGISTER:
 router.post("/register", async (req, res) => {
-    try {                
+    try {
         // Get username and password from the request body
         const { username, password, email } = req.body;
 
@@ -62,7 +85,7 @@ router.post("/register", async (req, res) => {
             // Hash the user's password:
             // 1. Generate salt with 10 Salt Rounds
             const salt = await bcrypt.genSalt(10);
-                        
+
             // 2. Hash password
             const hashedPassword = await bcrypt.hash(password, salt);
 

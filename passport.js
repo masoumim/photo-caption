@@ -53,7 +53,7 @@ This way we’re able to access the logged-in user’s data in req.user on every
 */
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await requests.getUserById(id);
+        const user = await requests.getUserByID(id);
         done(null, { id: user[0].dataValues.id, name: user[0].dataValues.name, password: user[0].dataValues.password, email: user[0].dataValues.email });
     } catch (err) {
         done(err);
