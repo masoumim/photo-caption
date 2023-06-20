@@ -1,16 +1,21 @@
+<!-- CSS FILE -->
+<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+
 <%- include('../layout/header'); -%>
 <br>
 <br>
-Welcome back, <%=user.name%>
-    <br>
-    <a href="/logout">
-        <button>Log out</button>
-    </a>
+<div class="welcome-message">
+    Welcome back, <%=user.name%>
     <br>
     <%=user.email%>
-        <br>
+</div>
+    <br>
+    <a href="/logout"><button class="logout-button">Log out</button></a>    
+    
+    <div class="profile-container">
         <h3>Your captions and comments:</h3>
         <% images.forEach(function(img){ %>
+        <div class="profile-child">
             <br>
             <h4><%=img.title%></h4>
             <%=img.author%>, <i><%=img.date%></i>
@@ -24,6 +29,8 @@ Welcome back, <%=user.name%>
             </a>
             <br>
             <br>
+            <br>
+            Comments:
             <br>            
             <% captions.forEach(function(caption){ %>
                 <%if (img.id === caption.img_id) { %>
@@ -33,8 +40,9 @@ Welcome back, <%=user.name%>
                     <br>                    
                 <% } %>
             <% }); %>
-        <br>
-        <br>
-        <br>
+            <br>
+            <br>
+            <br>
+        </div>
         <% }); %>
-        <br>
+    </div>

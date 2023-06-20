@@ -1,6 +1,11 @@
+<!-- CSS FILE -->
+<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+
 <%- include('../layout/header'); -%>
-<ul>
+
+<div class="allImages-container">    
     <% images.forEach(function(img){ %>
+        <div class="allImages-child">
         <br>
         <h4><%=img.title%></h4>
         <%=img.author%>, <i><%=img.date%></i>
@@ -16,6 +21,7 @@
         <br>
         <br>
         Comments:
+        <br>
         <% captions.forEach(function(caption){ %>
             <%if (img.id === caption.img_id) { %>
                 <% users.forEach(function(user){ %>
@@ -26,11 +32,12 @@
                         <br>
                     <% } %>
                 <% }); %>      
-            <% } %>
+            <% } %>    
         <% }); %>
-    <br>
-    <br>
-    <br>
+        <br>
+        <br>
+        <br>
+        </div>
     <% }); %>
-</ul>
+</div>
 

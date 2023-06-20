@@ -1,5 +1,10 @@
+<!-- CSS FILE -->
+<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+
 <%- include('../layout/header'); -%>
-<h3>Register:</h3>
+<div class="register-container">
+    <div class="register-child">
+    <h3>Register:</h3>
 <!-- REGISTER FORM -->
 <form action="/register" method="post">
     <label>Username</label>
@@ -17,5 +22,7 @@
     <input type="password" name="password">    
     <br>
     <br>
-    <button type="submit">Register</button>
+    <button type="submit" class="register-button">Register</button>
 </form>
+    </div>
+</div>
