@@ -37,21 +37,33 @@ const getAllUsers = async () => {
 
 // ADD USER TO DB
 const addUser = async (name_, password_, email_) => {
-    // Create an instance of User
-    const insertQuery = await User.create({ name: name_, password: password_, email: email_ });
-    return insertQuery;
+    try {
+        // Create an instance of User
+        const insertQuery = await User.create({ name: name_, password: password_, email: email_ });
+        return insertQuery;
+    } catch (err) {
+        return err;
+    }
 }
 
 // GET USER BY NAME
 const getUserByName = async (name_) => {
-    const getQuery = await User.findAll({ where: { name: name_ } });
-    return getQuery;
+    try {
+        const getQuery = await User.findAll({ where: { name: name_ } });
+        return getQuery;
+    } catch (err) {
+        return err;
+    }
 }
 
 // GET USER BY ID
 const getUserByID = async (id_) => {
-    const getQuery = await User.findAll({ where: { id: id_ } });
-    return getQuery;
+    try {
+        const getQuery = await User.findAll({ where: { id: id_ } });
+        return getQuery;
+    } catch (err) {
+        return err;
+    }
 }
 
 // GET USER(S) FOR EACH CAPTION ID
@@ -91,22 +103,26 @@ const addImg = async (path, title, date, author, description) => {
 
 // GET ALL IMGS
 const getAllImgs = async () => {
-    const getQuery = await Img.findAll();
+    try {
+        const getQuery = await Img.findAll();
 
-    // Extract all of the file names from the query result
-    let fileNames = [];
-    for (const element in getQuery) {
-        // Create obj that contains image path (file name) and the image's ID
-        const obj = {};
-        obj.id = getQuery[element].dataValues.id;
-        obj.filename = getQuery[element].dataValues.img_path;
-        obj.title = getQuery[element].dataValues.img_title;
-        obj.author = getQuery[element].dataValues.img_author;
-        obj.date = getQuery[element].dataValues.img_date;
-        obj.description = getQuery[element].dataValues.img_description;
-        fileNames.push(obj);
+        // Extract all of the file names from the query result
+        let fileNames = [];
+        for (const element in getQuery) {
+            // Create obj that contains image path (file name) and the image's ID
+            const obj = {};
+            obj.id = getQuery[element].dataValues.id;
+            obj.filename = getQuery[element].dataValues.img_path;
+            obj.title = getQuery[element].dataValues.img_title;
+            obj.author = getQuery[element].dataValues.img_author;
+            obj.date = getQuery[element].dataValues.img_date;
+            obj.description = getQuery[element].dataValues.img_description;
+            fileNames.push(obj);
+        }
+        return fileNames;
+    } catch (err) {
+        return err;
     }
-    return fileNames;
 }
 
 // GET IMG BY ID
@@ -197,10 +213,8 @@ const getCaptionsByUserID = async (userID) => {
             captions.push(obj);
         }
         return captions;
-
-
     } catch (err) {
-
+        return err;
     }
 }
 
