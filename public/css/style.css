@@ -42,15 +42,20 @@ body {
 
 .home-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 
-.home-child {
+.home-child {  
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #E4DCCF;
-  width: 200px;
-  margin: 10px;
-  padding: 20px;
+}
+
+.home-child-content{
+  text-align: center;  
+  padding: 10px;
 }
 
 .home-title {
