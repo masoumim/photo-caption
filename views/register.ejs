@@ -2,27 +2,30 @@
 <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
 
 <%- include('../layout/header'); -%>
+<br>
 <div class="register-container">
     <div class="register-child">
-    <h3>Register:</h3>
-<!-- REGISTER FORM -->
-<form action="/register" method="post">
-    <label>Username</label>
-    <br>
-    <input type="text" name="username">
-    <br>
-    <br>
-    <label>Email (optional)</label>
-    <br>
-    <input type="email" name="email">
-    <br>
-    <br>
-    <label>Password</label>
-    <br>
-    <input type="password" name="password">    
-    <br>
-    <br>
-    <button type="submit" class="register-button">Register</button>
-</form>
+        <div class="register-child-content">                          
+                <h3>Register:</h3>
+            <!-- REGISTER FORM -->
+            <form action="/register" method="post">
+                <label>Username</label>
+                <br>
+                <input type="text" name="username">
+                <br>
+                <br>
+                <label>Email (optional)</label>
+                <br>
+                <input type="email" name="email">
+                <br>
+                <br>
+                <label>Password</label>
+                <br>
+                <input type="password" name="password">    
+                <br>
+                <br>
+                <button type="submit" class="register-button">Register</button>
+            </form>
+        </div>
     </div>
 </div>
