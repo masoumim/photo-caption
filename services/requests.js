@@ -14,16 +14,6 @@ const { Img } = require('../db/models/img.js');
 // Get the Caption model
 const { Caption } = require('../db/models/caption.js');
 
-// Create new sequelize connection to the db
-const sequelize = new Sequelize(process.env.DATABASE_URL,
-    {
-        dialect: 'postgres',
-        dialectOptions: {
-            bigNumberStrings: true, ssl: { rejectUnauthorized: false }
-        }
-    });
-
-
 // GET ALL USERS
 const getAllUsers = async () => {
     try {
@@ -213,7 +203,6 @@ const getCaptionsByUserID = async (userID) => {
 
     }
 }
-
 
 module.exports = {
     addUser,

@@ -1,9 +1,6 @@
 // Import modules and libraries
 const express = require("express");
 
-// Import the passport module
-const passport = require("passport");
-
 // Import the requests module
 const requests = require("../services/requests");
 
