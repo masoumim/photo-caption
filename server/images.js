@@ -4,6 +4,12 @@ const express = require("express");
 // Import the requests module
 const requests = require("../services/requests");
 
+// Require in the utils module
+const utils = require("../utils/utils.js");
+
+// Require in the user module
+const user = require("./user.js");
+
 // Require in the path module
 const path = require('path');
 
@@ -15,6 +21,9 @@ const myCache = new nodecache({stdTTL: 0});
 
 // Create the user router
 const router = express.Router();
+
+// Key used for node-cache's key/value pair
+const key = "getAllImagesCache"; 
 
 // GET image (/image/:imageId)
 router.get("/image/:id", async (req, res) => {
@@ -39,8 +48,7 @@ router.get("/image/:id", async (req, res) => {
 });
 
 // GET all images and captions for each image (/images)
-router.get("/images", async (req, res) => {
-    const key = "getAllImagesCache"; // Key used for node-cache's key/value pair
+router.get("/images", async (req, res) => {    
     try {
         if (myCache.has(key)) {            
             // CACHE HIT
@@ -88,11 +96,18 @@ router.post("/image/:id", async (req, res) => {
     try {
         // Check if there is an active, authenticated User currently logged in
         if (req.user) {
+            
             // Get the submitted comment
             const submittedComment = req.body.comment;
 
             // Add the caption to the db
             await requests.addCaption(submittedComment, req.user.id, parseInt(req.params.id));
+
+            // Update the cache:            
+            utils.updateAllImagesCache(key, myCache);
+
+            // Update user data cache:
+            utils.updateUserDataCache(req.user.id, user.userDataCache);
 
             // Reload the page to show the new comment
             res.status(201).redirect(req.originalUrl);

@@ -75,7 +75,8 @@ app.use(passport.session());
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
 // Require in the routes from user.js
-app.use(require("./server/user.js"));
+const userRouter = require("./server/user.js");
+app.use(userRouter.router);
 
 // Require in the routes from images.js
 app.use(require("./server/images.js"));

@@ -6,6 +6,9 @@ const bcrypt = require("bcrypt");
 // Import the requests module
 const requests = require("../services/requests");
 
+// Require in the utils module
+const utils = require("../utils/utils.js");
+
 // Require in the node-cache module used for caching
 const nodecache = require('node-cache');
 
@@ -41,29 +44,13 @@ router.get("/profile", async (req, res) => {
                 res.render("profile", { user: req.user, images: userDataFromCache.imagesWithUserComment, captions: userDataFromCache.userCaptions });
             } else {                
                 // CACHE MISS - Load data from DB
-                // If user is logged in, render profile including pictures and comments made by user
-                let imagesWithUserComment = []; // Array to store images with comments made by user
-
+                                
                 // Get User captions:
                 const userCaptions = await requests.getCaptionsByUserID(req.user.id);
 
-                // Get corresponding images:
-                if (userCaptions.length > 0) {
-                    for (element in userCaptions) {
-                        const image = await requests.getImg(userCaptions[element].img_id);
+                // Get images that have a comment by user
+                const imagesWithUserComment = await utils.getImagesWithUserComment(userCaptions);
 
-                        // We only want to add an image once, even if one user has multiple comments on one image
-                        // Check if the image is in the array already
-                        const isFound = imagesWithUserComment.some(element => {
-                            return element.id === image.id;
-                        });
-
-                        // If image not found, add it to array
-                        if (!isFound) {
-                            imagesWithUserComment.push(image);
-                        }
-                    }
-                }
                 // Save cache
                 const data = { imagesWithUserComment, userCaptions };
                 userDataCache.set(key, data);
@@ -144,4 +131,4 @@ router.post("/", passport.authenticate("local", { failureRedirect: "/" }), (req,
 });
 
 // Export the user router
-module.exports = router;
+module.exports = {router, userDataCache}
