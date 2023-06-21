@@ -19,17 +19,9 @@ const updateUserDataCache = async (userID, cache) => {
 // Updates the cache that stores all images, comments and users
 // Called when a user adds a comment to a photo
 const updateAllImagesCache = async (key, cache) => {
-    // Get all of the img paths stored in DB
-    const images = await requests.getAllImgs();
 
-    // Get all of the captions stored in DB
-    const captions = await requests.getAllCaptions();
-
-    // Get all of the users stored in the DB
-    const users = await requests.getAllUsers();
-
-    // Store all data in single object to be saved to cache
-    const data = { images, captions, users };
+    // Get all images and image data (comments and users)
+    const data = await getAllImageData();
 
     // Update the cache
     cache.set(key, data);
@@ -59,6 +51,24 @@ const getImagesWithUserComment = async (userCaptions) => {
     return imagesWithUserComment;
 }
 
+// Returns an object that contains all images + image data (comments and users)
+const getAllImageData = async () => {
+    // Get all of the img paths stored in DB
+    const images = await requests.getAllImgs();
+
+    // Get all of the captions stored in DB
+    const captions = await requests.getAllCaptions();
+
+    // Get all of the users stored in the DB
+    const users = await requests.getAllUsers();
+
+    // Store all data in single object to be saved to cache
+    const data = { images, captions, users };
+
+    // Return the data
+    return data;
+}
+
 module.exports = {
-    updateAllImagesCache, updateUserDataCache, getImagesWithUserComment
+    updateAllImagesCache, updateUserDataCache, getImagesWithUserComment, getAllImageData
 }

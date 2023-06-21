@@ -23,7 +23,7 @@ const myCache = new nodecache({stdTTL: 0});
 const router = express.Router();
 
 // Key used for node-cache's key/value pair
-const key = "getAllImagesCache"; 
+const key = "getAllImagesCache";
 
 // GET image (/image/:imageId)
 router.get("/image/:id", async (req, res) => {
@@ -60,23 +60,15 @@ router.get("/images", async (req, res) => {
         }
         else {
             // CACHE MISS
-            // Get all of the img paths stored in DB
-            const images = await requests.getAllImgs();
 
-            // Get all of the captions stored in DB
-            const captions = await requests.getAllCaptions();
-
-            // Get all of the users stored in the DB
-            const users = await requests.getAllUsers();
-
-            // Store all data in single object to be saved to cache
-            const data = { images, captions, users };
+            // Get all images and image data (comments and users)
+            const data = await utils.getAllImageData();
 
             // Save cache
             myCache.set(key, data);
 
             // Render page with array of img paths, captions and users
-            res.status(200).render("images", { images: images, captions: captions, users: users });
+            res.status(200).render("images", { images: data.images, captions: data.captions, users: data.users });
         }
     }
     catch (err) {
@@ -84,14 +76,7 @@ router.get("/images", async (req, res) => {
     }
 });
 
-
 // POST caption (/image/:imageId)
-/*
-Pass in passport.authenticate() as middleware. 
-Using this middleware allows Passport.js to take care of the authentication 
-process behind the scenes and creates a user session for us.
-If successful, the user will be Serialized
-*/
 router.post("/image/:id", async (req, res) => {
     try {
         // Check if there is an active, authenticated User currently logged in

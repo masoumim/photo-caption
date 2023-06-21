@@ -79,7 +79,8 @@ const userRouter = require("./server/user.js");
 app.use(userRouter.router);
 
 // Require in the routes from images.js
-app.use(require("./server/images.js"));
+const imagesRouter = require("./server/images.js");
+app.use(imagesRouter);
 
 // Start the server listening at PORT
 app.listen(PORT, () => {

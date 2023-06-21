@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 
 // GET PROFILE
 router.get("/profile", async (req, res) => {
-    if (req.user) {
+    if (req.user) {                        
         try {
             const key = "getUserData:" + req.user.id; // Key used for node-cache's key/value pair            
             if (userDataCache.has(key)) {                
@@ -86,7 +86,7 @@ router.post("/register", async (req, res) => {
     try {     
         // Get username and password from the request body
         const { username, password, email } = req.body;
-
+                        
         // Check if a user with that name already exists in the db
         const userCheck = await requests.getUserByName(username);
 
