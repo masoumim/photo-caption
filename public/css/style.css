@@ -1,330 +1,326 @@
 /* GLOBAL CSS */
 body {
-    background-color: #F9F5EB;
-    font-family: Helvetica;
+  background-color: #F9F5EB;
+  font-family: Helvetica;
 }
 
 /* NAV BAR */
 .nav-bar {
-    padding: 15px;
-    background-color: #E4DCCF;
-    color: #002B5B;
-    font-size: large;
+  padding: 15px;
+  background-color: #E4DCCF;
+  color: #002B5B;
+  font-size: large;
 }
 
 .nav-bar a {
-    position: relative;
-    text-decoration: none;
-    padding: 10px;
-    font-weight: bold;
+  position: relative;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: bold;
 }
 
 .nav-bar a::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #002B5B;
-    bottom: 0;
-    left: 0;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .3s ease-in-out;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #002B5B;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
 }
 
 .nav-bar a:hover::before {
-    transform-origin: left;
-    transform: scaleX(1);
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
 /* HOME PAGE */
-.home-title{
-    font-weight: bold;
-    color: #EA5455;
-    text-align: center;    
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-input[name=username] {    
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  input[name=password] {        
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.home-child {
+  background-color: #E4DCCF;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+}
 
-  .login-button {
-    appearance: button;
-    background-color: #002B5B;
-    border: 1px solid #002B5B;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    font-size: 14px;
-    line-height: 1.15;
-    overflow: visible;
-    padding: 12px 16px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transition: all 80ms ease-in-out;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 200px;
-  }
-  
-  .login-button:disabled {
-    opacity: .5;
-  }
-  
-  .login-button:focus {
-    outline: 0;
-  }
-  
-  .login-button:hover {
-    background-color: #0A46E4;
-    border-color: #0A46E4;
-  }
-  
-  .login-button:active {
-    background-color: #0039D7;
-    border-color: #0039D7;
-  }
+.home-title {
+  font-weight: bold;
+  color: #EA5455;
+  text-align: center;
+}
 
-  .home-container {
-    width: 100%;
-    height: 100%;
-    /* Setup */
-    position: relative;
-  }
-  
-  .home-child {        
-    text-align: center;
-    padding: 15px;
-    background-color: #E4DCCF;
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+input[name=username] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
-  /* ALL IMAGES PAGE */
-   .allImages-container {    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .allImages-child {                                    
-    background-color: #E4DCCF;
-    width: 700px;
-    margin: 10px;
-    padding: 20px;
-  }
+input[name=password] {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  /* IMAGE PAGE */
-  .image-container {    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .image-child {                                    
-    background-color: #E4DCCF;
-    width: 700px;
-    margin: 10px;
-    padding: 20px;
-  }
+.login-button {
+  appearance: button;
+  background-color: #002B5B;
+  border: 1px solid #002B5B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+}
 
-  input[name=comment] {    
-    padding: 12px 20px;
-    width: 100%;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
+.login-button:disabled {
+  opacity: .5;
+}
 
-  .comment-button {
-    appearance: button;
-    background-color: #002B5B;
-    border: 1px solid #002B5B;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    font-size: 14px;
-    line-height: 1.15;
-    overflow: visible;
-    padding: 12px 16px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transition: all 80ms ease-in-out;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 200px;
-  }
-  
-  .comment-button:disabled {
-    opacity: .5;
-  }
-  
-  .comment-button:focus {
-    outline: 0;
-  }
-  
-  .comment-button:hover {
-    background-color: #0A46E4;
-    border-color: #0A46E4;
-  }
-  
-  .comment-button:active {
-    background-color: #0039D7;
-    border-color: #0039D7;
-  }
+.login-button:focus {
+  outline: 0;
+}
 
-  /* PROFILE PAGE */
-  .welcome-message{
-    font-weight: bold;
-    color: #EA5455;
-  }
-  
-  .logout-button {
-    appearance: button;
-    background-color: #002B5B;
-    border: 1px solid #002B5B;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    font-size: 14px;
-    line-height: 1.15;
-    overflow: visible;
-    padding: 12px 16px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transition: all 80ms ease-in-out;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 200px;
-  }
-  
-  .logout-button:disabled {
-    opacity: .5;
-  }
-  
-  .logout-button:focus {
-    outline: 0;
-  }
-  
-  .logout-button:hover {
-    background-color: #0A46E4;
-    border-color: #0A46E4;
-  }
-  
-  .logout-button:active {
-    background-color: #0039D7;
-    border-color: #0039D7;
-  }
-  
-  .profile-container {    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .profile-child {                                    
-    background-color: #E4DCCF;
-    width: 700px;
-    margin: 10px;
-    padding: 20px;
-  }
+.login-button:hover {
+  background-color: #0A46E4;
+  border-color: #0A46E4;
+}
 
-  /* REGISTER PAGE */
-  .register-container {
-    width: 100%;
-    height: 100%;
-    /* Setup */
-    position: relative;
-  }
-  
-  .register-child {        
-    text-align: center;
-    padding: 15px;
-    background-color: #E4DCCF;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.login-button:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}
 
-  input[name=email] {    
-    padding: 12px 20px;
-    width: 100%;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
 
-  .register-button {
-    appearance: button;
-    background-color: #002B5B;
-    border: 1px solid #002B5B;
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    font-size: 14px;
-    line-height: 1.15;
-    overflow: visible;
-    padding: 12px 16px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transition: all 80ms ease-in-out;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 200px;
-  }
-  
-  .register-button:disabled {
-    opacity: .5;
-  }
-  
-  .register-button:focus {
-    outline: 0;
-  }
-  
-  .register-button:hover {
-    background-color: #0A46E4;
-    border-color: #0A46E4;
-  }
-  
-  .register-button:active {
-    background-color: #0039D7;
-    border-color: #0039D7;
-  }
+
+/* ALL IMAGES PAGE */
+.allImages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.allImages-child {
+  background-color: #E4DCCF;
+  width: 700px;
+  margin: 10px;
+  padding: 20px;
+}
+
+/* IMAGE PAGE */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-child {
+  background-color: #E4DCCF;
+  width: 700px;
+  margin: 10px;
+  padding: 20px;
+}
+
+input[name=comment] {
+  padding: 12px 20px;
+  width: 100%;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.comment-button {
+  appearance: button;
+  background-color: #002B5B;
+  border: 1px solid #002B5B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+}
+
+.comment-button:disabled {
+  opacity: .5;
+}
+
+.comment-button:focus {
+  outline: 0;
+}
+
+.comment-button:hover {
+  background-color: #0A46E4;
+  border-color: #0A46E4;
+}
+
+.comment-button:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}
+
+/* PROFILE PAGE */
+.welcome-message {
+  font-weight: bold;
+  color: #EA5455;
+}
+
+.logout-button {
+  appearance: button;
+  background-color: #002B5B;
+  border: 1px solid #002B5B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+}
+
+.logout-button:disabled {
+  opacity: .5;
+}
+
+.logout-button:focus {
+  outline: 0;
+}
+
+.logout-button:hover {
+  background-color: #0A46E4;
+  border-color: #0A46E4;
+}
+
+.logout-button:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-child {
+  background-color: #E4DCCF;
+  width: 700px;
+  margin: 10px;
+  padding: 20px;
+}
+
+/* REGISTER PAGE */
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-child {
+  background-color: #E4DCCF;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+}
+
+input[name=email] {
+  padding: 12px 20px;
+  width: 100%;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.register-button {
+  appearance: button;
+  background-color: #002B5B;
+  border: 1px solid #002B5B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+}
+
+.register-button:disabled {
+  opacity: .5;
+}
+
+.register-button:focus {
+  outline: 0;
+}
+
+.register-button:hover {
+  background-color: #0A46E4;
+  border-color: #0A46E4;
+}
+
+.register-button:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}
