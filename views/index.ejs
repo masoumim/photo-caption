@@ -2,21 +2,21 @@
 <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
 
 <%- include('../layout/header'); -%>
-<p class="home-title">Welcome to Photo Caption - Comment on or Caption some of the most famous photos in history!</p>
+<p class="home-title" id="username">Welcome to Photo Caption - Comment on or Caption some of the most famous photos in history!</p>
 
 <div class="home-container">
     <div class="home-child">
         <div class="home-child-content">
         <!-- LOGIN FORM -->
         <form action="/" method="post">
-            <label>Username</label>
+            <label>User name</label>
             <br>
-            <input type="text" name="username">
+            <input type="text" class="username" name="username" value="Enter name" onfocus="this.value=''">
             <br>
             <br>
             <label>Password</label>
             <br>
-            <input type="password" name="password">
+            <input type="password" name="password" class="password">
             <br>
             <br>
             <button type="submit" class="login-button">Login</button>

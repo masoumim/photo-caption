@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
         res.redirect("/profile");
     }
     else {
-        // Otherwise, render home / index
+        // Otherwise, render home / index        
         res.render("index");
     }
 });
@@ -96,7 +96,7 @@ router.get('/logout', function (req, res, next) {
 
 // POST REGISTER:
 router.post("/register", async (req, res) => {
-    try {
+    try {     
         // Get username and password from the request body
         const { username, password, email } = req.body;
 
@@ -124,7 +124,7 @@ router.post("/register", async (req, res) => {
             }
         }
         else {
-            res.status(500).send("Sorry a user with that name is already registered.");
+            res.status(500).send("Sorry, please enter a valid user name");
         }
 
     } catch (error) {
