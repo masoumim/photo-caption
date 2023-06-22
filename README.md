@@ -25,7 +25,7 @@ App Link: https://photo-caption-cd9b50c22ff8.herokuapp.com
 
 **EJS Template Engine:** A simple templating language that lets you generate HTML markup with plain JavaScript
 
-**Node-cache:** Simple and fast NodeJS internal caching. Node internal in memory cache.
+**Node-cache:** Simple and fast NodeJS internal caching.
 
 **Express-validator:** A set of express.js middlewares that wraps the extensive collection of validators and sanitizers offered by validator.js
 
@@ -36,7 +36,7 @@ This project is a web app that allows users to securely login and leave captions
 
 
 # Security
-Login and registration is secured using password hashing. Sessions are secure and persistent using secure cookies. HTTP headers are set using the Helmet library and are automatically set by the library to ensure the headers conform to web security standard. User input is also validated and sanitized by using the Express-validator library. Finally, SQL injection opportunites are minimized by using a secure ORM, Sequelize.
+Login and registration is secured using password hashing. Sessions are secure and persistent using secure cookies. HTTP headers are set using the Helmet library and are automatically set by the library to ensure the headers conform to web security standards. User input is also validated and sanitized by using the Express-validator library. Finally, SQL injection opportunites are minimized by using a secure ORM, Sequelize.
 
 
 # OpenAPI / Swagger
