@@ -4,31 +4,31 @@ App Link: https://photo-caption-cd9b50c22ff8.herokuapp.com
 
 # Project technical stack:
 
-Language: Node.js / JavaScript
+**Language:** Node.js / JavaScript
 
-Framework: Express.js
+**Framework:** Express.js
 
-Database: PostgreSQL / Heroku
+**Database:** PostgreSQL / Heroku
 
-Passport.js: Authentication middleware for Node.js, used for authenticting users at login
+**Passport.js:** Authentication middleware for Node.js, used for authenticting users at login
 
-bcrypt: A password-hashing function, used to hash and salt plaintext passwords before they are saved to database
+**bcrypt:** A password-hashing function, used to hash and salt plaintext passwords before they are saved to database
 
-dotenv: Loads environment variables from .env file, used for storing database connection string and cookie secret
+**dotenv:** Loads environment variables from .env file, used for storing database connection string and cookie secret
 
-Sequelize: An ORM used for interacting with Database
+**Sequelize:** An ORM used for interacting with Database
 
-Express-Session: Session middleware for Express, used for creating user login sessions and sending secure cookie to client
+**Express-Session:** Session middleware for Express, used for creating user login sessions and sending secure cookie to client
 
-Connect-pg-simple: A minimal PostgreSQL session store for Connect/Express, used to save user session data
+**Connect-pg-simple:** A minimal PostgreSQL session store for Connect/Express, used to save user session data
 
-EJS Template Engine: A simple templating language that lets you generate HTML markup with plain JavaScript
+**EJS Template Engine:** A simple templating language that lets you generate HTML markup with plain JavaScript
 
-Node-cache: Simple and fast NodeJS internal caching. Node internal in memory cache.
+**Node-cache:** Simple and fast NodeJS internal caching. Node internal in memory cache.
 
-Express-validator: A set of express.js middlewares that wraps the extensive collection of validators and sanitizers offered by validator.js
+**Express-validator:** A set of express.js middlewares that wraps the extensive collection of validators and sanitizers offered by validator.js
 
-Helmet: Secures Express apps by setting HTTP response headers to comply with web security standards
+**Helmet:** Secures Express apps by setting HTTP response headers to comply with web security standards
 
 # Project info:
 This project is a web app that allows users to securely login and leave captions or comments on some of the worlds most famous (and infamous) photographs.
