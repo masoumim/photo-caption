@@ -17,6 +17,9 @@ const session = require("express-session")
 // pgSession is used to store a users session in a postgreSQL db
 const pgSession = require('connect-pg-simple')(session);
 
+// Helmet sets HTTP headers to comply with web security standards
+const helmet = require("helmet");
+
 // Create instance of an express module
 const app = express();
 
@@ -34,6 +37,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // Enables body parsing
 app.use(express.json());
+
+// Use the Helment library
+app.use(helmet());
 
 // Use the EJS Template engine
 app.set("view engine", "ejs");
