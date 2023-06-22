@@ -1,0 +1,219 @@
+openapi: 3.0.1
+info:
+  title: Photo Caption
+  version: 1.0.0
+  description: A web app that lets users leave comments on famous photos
+paths:
+  /:
+    summary: Home page
+    description: The main landing page of the app
+    get:
+      summary: Gets the homepage or user profile
+      description: >-
+        If user is logged in this operation will get the user's profile,
+        otherwise it gets the login page
+      operationId: get_home
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_home:
+                  value: index.ejs
+          description: Default successful sample response
+      tags:
+        - User
+    post:
+      summary: Successful login will redirect user to their profile page
+      description: If the user is authenticated, the /profile page will be fetched
+      operationId: post_home
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                post_home:
+                  value: profile.ejs
+          description: Default success sample response
+        '401':
+          content:
+            ejs File:
+              examples:
+                post_home:
+                  value: index.ejs
+          description: Default unsuccessful sample response
+      tags:
+        - User
+  /register:
+    summary: Gets the registration page
+    description: User makes a get request to the registration page
+    get:
+      summary: Returns the registration page
+      description: 'The user makes a successful get request to the registration page '
+      operationId: get_register
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_register:
+                  value: register.ejs
+          description: Default successful sample response
+      tags:
+        - User
+    post:
+      summary: User completes registration form
+      description: The user enters a valid username and password into the registration form
+      operationId: post_register
+      responses:
+        '201':
+          content:
+            ejs File:
+              examples:
+                post_register:
+                  value: index.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                post_register:
+                  value: '"Sorry, please enter a valid user name"'
+          description: Default unsuccessful sample response
+      tags:
+        - User
+  /profile:
+    summary: User makes get request to their profile
+    description: User logs in and is redirect to their profile page
+    get:
+      summary: Users profile page is retrieved
+      description: >-
+        User logs in with their username and pw and is then redirect to their
+        profile page
+      operationId: get_profile
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_profile:
+                  value: profile.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                get_profile:
+                  value: '"Error retrieving user"'
+          description: Default unsuccessful sample reponse
+      tags:
+        - User
+  /logout:
+    summary: User logs out of their session
+    description: User clicks the logout button on their profile page
+    get:
+      summary: User logs out of their profile / session
+      description: User clicks the logout button on their profile page
+      operationId: get_logout
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_logout:
+                  value: index.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                get_logout:
+                  value: '"There was an error logging out the user"'
+          description: Default unsuccessful sample response
+      tags:
+        - User
+  /images:
+    summary: Gets all images and user comments
+    description: Retrieves all of the photos and their corresponding user comments
+    get:
+      summary: Gets all of the images
+      description: Returns all of the images in the DB along with their comments by users
+      operationId: get_images
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_images:
+                  value: images.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                get_images:
+                  value: '"Error getting images"'
+          description: Default unsuccessful sample response
+      tags:
+        - Images
+  '/image/{id}:':
+    summary: Get a single image by image id
+    description: Retrieves a single image based on the image id
+    get:
+      summary: Gets the image by image id
+      description: Returns the image by image id from the DB along with all user comments
+      operationId: get_image
+      parameters:
+        - name: id
+          in: path
+          description: The id of the image.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            ejs File:
+              examples:
+                get_image:
+                  value: image.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                get_image:
+                  value: '"There was an error getting the image"'
+          description: Default unsuccessful sample response
+      tags:
+        - Image
+    post:
+      summary: User posts a comment on picture
+      description: A logged in and authenticated user posts a comment on a picture
+      operationId: post_image
+      parameters:
+        - name: id
+          in: path
+          description: The id of the image.
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            ejs File:
+              examples:
+                post_image:
+                  value: image.ejs
+          description: Default successful sample response
+        '500':
+          content:
+            text/plain:
+              examples:
+                post_image:
+                  value: >-
+                    "Comment can not be empty" or "Comment must be at least 3
+                    character long"
+          description: Default unsuccessful sample response
+      tags:
+        - Image

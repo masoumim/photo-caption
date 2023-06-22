@@ -26,11 +26,11 @@ const router = express.Router();
 router.get("/", (req, res) => {
     // If user is logged in - render their profile
     if (req.user) {
-        res.redirect("/profile");
+        res.status(200).redirect("/profile");
     }
     else {
         // Otherwise, render home / index        
-        res.render("index");
+        res.status(200).render("index");
     }
 });
 
@@ -59,20 +59,20 @@ router.get("/profile", async (req, res) => {
                 userDataCache.set(key, data);
 
                 // Render the profile page with user data from DB
-                res.render("profile", { user: req.user, images: imagesWithUserComment, captions: userCaptions });
+                res.status(200).render("profile", { user: req.user, images: imagesWithUserComment, captions: userCaptions });
             }
         } catch (err) {
             res.status(500).send(err);
         }
     } else {
         // If user isn't logged in, render the index page
-        res.redirect("/");
+        res.status(200).redirect("/");
     }
 });
 
 // GET REGISTER
 router.get("/register", (req, res) => {
-    res.render("register");
+    res.status(200).render("register");
 });
 
 // GET LOGOUT
@@ -80,7 +80,7 @@ router.get("/register", (req, res) => {
 router.get('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) { return next(err); }
-        res.redirect('/');
+        res.status(200).redirect('/');
     });
 });
 
@@ -141,7 +141,7 @@ If successful, the user will be Serialized
 */
 // POST LOGIN
 router.post("/", passport.authenticate("local", { failureRedirect: "/" }), (req, res) => {
-    res.redirect("profile");
+    res.status(200).redirect("profile");
 });
 
 // Export the user router

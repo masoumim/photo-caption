@@ -44,7 +44,7 @@ router.get("/image/:id", async (req, res) => {
         const users = await requests.getUsersByCaptionID(captions);
 
         // Render page with retrieved image filename and user's captions
-        res.render("image", { image: image, imgpath: imgpath, captions: captions, users: users, id: req.params.id });
+        res.status(200).render("image", { image: image, imgpath: imgpath, captions: captions, users: users, id: req.params.id });
     } catch (err) {
         res.status(500).send(err);
     }
