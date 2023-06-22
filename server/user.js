@@ -9,6 +9,9 @@ const requests = require("../services/requests");
 // Require in the utils module
 const utils = require("../utils/utils.js");
 
+// Require the express-validator library. Used as middleware in routes to check data validity
+const { check, validationResult } = require("express-validator");
+
 // Require in the node-cache module used for caching
 const nodecache = require('node-cache');
 
@@ -22,7 +25,7 @@ const router = express.Router();
 // GET HOME
 router.get("/", (req, res) => {
     // If user is logged in - render their profile
-    if (req.user) {        
+    if (req.user) {
         res.redirect("/profile");
     }
     else {
@@ -33,18 +36,18 @@ router.get("/", (req, res) => {
 
 // GET PROFILE
 router.get("/profile", async (req, res) => {
-    if (req.user) {                        
+    if (req.user) {
         try {
             const key = "getUserData:" + req.user.id; // Key used for node-cache's key/value pair            
-            if (userDataCache.has(key)) {                
+            if (userDataCache.has(key)) {
                 // CACHE HIT - Load data from cache
                 const userDataFromCache = userDataCache.get(key);
 
                 // Render user profile with cached data
                 res.render("profile", { user: req.user, images: userDataFromCache.imagesWithUserComment, captions: userDataFromCache.userCaptions });
-            } else {                
+            } else {
                 // CACHE MISS - Load data from DB
-                                
+
                 // Get User captions:
                 const userCaptions = await requests.getCaptionsByUserID(req.user.id);
 
@@ -82,42 +85,53 @@ router.get('/logout', function (req, res, next) {
 });
 
 // POST REGISTER:
-router.post("/register", async (req, res) => {
-    try {     
-        // Get username and password from the request body
-        const { username, password, email } = req.body;
-                        
-        // Check if a user with that name already exists in the db
-        const userCheck = await requests.getUserByName(username);
-
-        if (userCheck.length === 0) {
-            // Hash the user's password:
-            // 1. Generate salt with 10 Salt Rounds
-            const salt = await bcrypt.genSalt(10);
-
-            // 2. Hash password
-            const hashedPassword = await bcrypt.hash(password, salt);
-
-            // Create new user:
-            const resultUser = await requests.addUser(username, hashedPassword, email);
-
-            // Add if/else statement with the new user as the condition:
-            if (resultUser) {
-                // Send correct response if new user is created:
-                res.status(201).redirect("/");
-            } else {
-                // Send correct response if new user failed to be created:
-                res.status(500).json({ msg: "Error: not able to register user" });
+router.post("/register",
+    [
+        check('username').not().isEmpty().withMessage('Username is required'),
+        check('password').not().isEmpty().withMessage('Password is required'),
+        check('password').isLength({min: 3}).withMessage('Password must be at least 3 characters long')
+    ], async (req, res) => {
+        try {
+            // If express-validator catches any errors, throw them to catch block
+            const errors = validationResult(req).array();
+            if (errors.length > 0) {
+                throw errors[0].msg;
             }
-        }
-        else {
-            res.status(500).send("Sorry, please enter a valid user name");
-        }
 
-    } catch (error) {
-        res.status(500).send(`${error}`);
-    }
-});
+            // Get username and password from the request body
+            const { username, password, email } = req.body;
+
+            // Check if a user with that name already exists in the db
+            const userCheck = await requests.getUserByName(username);
+
+            if (userCheck.length === 0) {
+                // Hash the user's password:
+                // 1. Generate salt with 10 Salt Rounds
+                const salt = await bcrypt.genSalt(10);
+
+                // 2. Hash password
+                const hashedPassword = await bcrypt.hash(password, salt);
+
+                // Create new user:
+                const resultUser = await requests.addUser(username, hashedPassword, email);
+
+                // Add if/else statement with the new user as the condition:
+                if (resultUser) {
+                    // Send correct response if new user is created:
+                    res.status(201).redirect("/");
+                } else {
+                    // Send correct response if new user failed to be created:
+                    res.status(500).json({ msg: "Error: not able to register user" });
+                }
+            }
+            else {
+                res.status(500).send("Sorry, please enter a valid user name");
+            }
+
+        } catch (error) {
+            res.status(500).send(`${error}`);
+        }
+    });
 
 /*
 Pass in passport.authenticate() as middleware. 
@@ -131,4 +145,4 @@ router.post("/", passport.authenticate("local", { failureRedirect: "/" }), (req,
 });
 
 // Export the user router
-module.exports = {router, userDataCache}
+module.exports = { router, userDataCache }
