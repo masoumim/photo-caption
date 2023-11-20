@@ -1,7 +1,9 @@
 # photo-caption
 A web app that lets users caption and comment on famous photos. Built using ExpressJS and NodeJS.
 
-App Link: https://photo-caption-cd9b50c22ff8.herokuapp.com
+**NOTE: (November 20, 2023) This project has been removed from Heroku / Heroku PostgreSQL hosting**
+
+~~App Link: https://photo-caption-cd9b50c22ff8.herokuapp.com~~
 
 # Project technical stack:
 
@@ -11,7 +13,7 @@ App Link: https://photo-caption-cd9b50c22ff8.herokuapp.com
 
 **Database:** PostgreSQL / Heroku
 
-**Passport.js:** Authentication middleware for Node.js, used for authenticting users at login
+**Passport.js:** Authentication middleware for Node.js, used for authenticating users at login
 
 **bcrypt:** A password-hashing function, used to hash and salt plaintext passwords before they are saved to database
 
@@ -36,7 +38,7 @@ This project is a web app that allows users to securely login and leave captions
 
 
 # Security
-Login and registration is secured using password hashing. Sessions are secure and persistent using secure cookies. HTTP headers are set using the Helmet library and are automatically set by the library to ensure the headers conform to web security standards. User input is also validated and sanitized by using the Express-validator library. Finally, SQL injection opportunites are minimized by using a secure ORM, Sequelize.
+Login and registration is secured using password hashing. Sessions are secure and persistent using secure cookies. HTTP headers are set using the Helmet library and are automatically set by the library to ensure the headers conform to web security standards. User input is also validated and sanitized by using the Express-validator library. Finally, SQL injection opportunities are minimized by using a secure ORM, Sequelize.
 
 
 # OpenAPI / Swagger
@@ -49,7 +51,7 @@ If you downloaded the Swagger editor, simply open the index.html file located in
 # Endpoints:
 
 
-Base URL: https://photo-caption-cd9b50c22ff8.herokuapp.com
+~~Base URL: https://photo-caption-cd9b50c22ff8.herokuapp.com~~
 
 Home Page
 ------
@@ -85,7 +87,7 @@ Image
 
 **Post:**
 
-/image/:id -- Makes a post requst using the users comment which is saved to the DB
+/image/:id -- Makes a post request using the users comment which is saved to the DB
 
 
 Register
